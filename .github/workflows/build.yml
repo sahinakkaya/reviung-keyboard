@@ -36,7 +36,7 @@ jobs:
         run: cp -R sahinakkaya/ qmk_firmware/keyboards/reviung/reviung41/keymaps/
       - name: Build reviung-keyboard firmware
         working-directory: ./qmk_firmware
-        run: qmk compile -kb reviung/reviung41 -km sahinakkaya 
+        run: qmk compile -kb reviung/reviung41 -km sahinakkaya -e CONVERT_TO=promicro_rp2040
       - name: Archive
         uses: actions/upload-artifact@v2
         with:
