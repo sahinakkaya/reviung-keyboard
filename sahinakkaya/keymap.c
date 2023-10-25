@@ -15,6 +15,13 @@
  */
 #include QMK_KEYBOARD_H
 #include "enums.h"
+#include "config.h"
+#include "math.h"
+#include "print.h"
+#include "combo.c"
+#include "leader.c"
+#include "tap_dance.c"
+#include "autocorrect.c"
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
