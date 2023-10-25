@@ -44,7 +44,7 @@ enum custom_keycodes {
 #define NUM_TAB LT(NUMPAD, KC_TAB)
 #define CTRL_ESC LCTL_T(KC_ESC)
 #define CTRL_QUOT LCTL_T(KC_QUOT)
-#define SHFT_CAPS LSFT_T(KC_CAPS)
+#define SHFT_CAPS LSFT_T(CW_TOGG)
 #define SHFT_BSLS RSFT_T(KC_BSLS)
 #define ALT_Z LALT_T(KC_Z)
 #define ALT_SLSH LALT_T(KC_SLSH)
