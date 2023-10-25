@@ -41,4 +41,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: reviung-keyboard
-          path: reviung_sahinakkaya.uf2
+          path: qmk_firmware/reviung41_sahinakkaya.uf2
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: reviung-keyboard2
+          path: qmk_firmware/reviung_reviung41_sahinakkaya.uf2
+
