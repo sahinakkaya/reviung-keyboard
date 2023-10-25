@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "enums.h"
-#include "keys.h"
 
 enum combos {
   ESC,
