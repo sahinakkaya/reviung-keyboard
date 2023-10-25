@@ -25,31 +25,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             LGUI_TAB,   LOW_SPC,    KC_ENTER,   RSE_BSPC,    RALT_REP
   ),
 
+
   [_LOWER] = LAYOUT(
-    _______,  KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,    KC_PERC,            KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,  KC_DEL,
-    _______,  KC_UNDS,  KC_PLUS,  KC_LCBR,  KC_RCBR,   KC_PIPE,            KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  KC_GRV,   KC_TILD,
-    _______,  KC_ESC,   KC_LGUI,  KC_LALT,  KC_CAPS,   KC_DQUO,            KC_HOME,  KC_END,   KC_PGUP,  KC_PGDN,  KC_PSCR,  RSFT_T(KC_SPC),
-                                            _______,   _______,  KC_ENT,   _______,  _______
+  _______, KC_TILD, _______,   _______,  _______,   KC_PLUS,                      KC_MPLY,  KC_MUTE,   KC_VOLD,  KC_VOLU,  KC_PWR,_______,
+  _______, KC_GRV,   _______,   G(KC_MINS), G(KC_EQL), KC_CIRC,                      KC_BRID,  KC_MPRV,   KC_MNXT,  KC_BRIU,   G(S(KC_4)),_______,
+  _______, _______, _______,   _______,  _______,   KC_MINS,                      _______,  _______,   _______,  _______,  _______,_______,
+                                 _______,   _______,  _______,  _______,   _______
+
   ),
 
+
   [_RAISE] = LAYOUT(
-    _______,  KC_1,     KC_2,     KC_3,     KC_4,      KC_5,               KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_DEL,
-    _______,  KC_MINS,  KC_EQL,   KC_LBRC,  KC_RBRC,   KC_BSLS,            KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
-    _______,  KC_ESC,   KC_RGUI,  KC_RALT,  KC_CAPS,   KC_QUOT,            KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,
-                                            _______,   _______,  KC_BSPC,  _______,  _______
+  _______, KC_EXLM,   KC_AT,  KC_HASH,   KC_DLR,   KC_BSLS,                    KC_PIPE,  KC_PGUP,   KC_ASTR,   KC_LBRC,  KC_RBRC,_______,
+  _______, KC_AMPR,  KC_PERC,  KC_LPRN,   KC_RPRN, KC_EQL,                     KC_LEFT,   KC_DOWN,   KC_UP,   KC_RIGHT,   TD_QUOT_DQT,_______,
+  _______, _______,  _______,   KC_LCBR,   KC_RCBR, KC_MINS,                   KC_UNDS,   KC_PGDN,   KC_HOME,  KC_END,  KC_BSLS,_______,
+                                 _______,   _______,  _______,    _______,   _______
+
   ),
+
+  [_WINDOW_MANAGER] = LAYOUT(
+  _______, A(KC_1),   A(KC_2),  A(KC_3),   A(KC_4), A(KC_5),                      A(KC_6),  _______,   _______,   _______,  A(S(KC_ENT)),_______,
+  _______, _______,  _______,   _______,  A(KC_F),   _______,                       A(KC_H),  A(KC_J),   A(KC_K),  A(KC_L),   _______,_______,
+  _______, _______,  _______,   _______,  _______,   _______,                       _______,  A(KC_M),   A(KC_COMM),  A(KC_DOT),  _______,_______,
+                                 _______,   A(KC_TAB),  A(KC_TAB),    A(KC_TAB),   A(KC_ENT)
+
+  ),
+
+  [_MOUSE] = LAYOUT(
+  _______, _______,  KC_WH_U,   KC_BTN3,  _______,   RGB_HUD,                       RGB_HUI,  KC_LCTL,   KC_MS_U,   KC_WH_U,  KC_DEL,_______,
+  _______, _______,  KC_WH_D,   KC_BTN2,  KC_BTN1,   KC_ACCEL,                       RGB_SAI,  KC_MS_L,   KC_MS_D,   KC_MS_R, KC_ACL0,_______,
+  _______, _______,  _______,   _______,  _______,   RGB_VAD,                       RGB_VAI,  KC_WH_D,   KC_WH_L,  KC_WH_R,  KC_ACL1,_______,
+                                 _______,   DRG_SCRLL,  _______,    _______,   _______
+  ),
+
   [_NUMPAD] = LAYOUT(
-    _______,  KC_1,     KC_2,     KC_3,     KC_4,      KC_5,               KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_DEL,
-    _______,  KC_MINS,  KC_EQL,   KC_LBRC,  KC_RBRC,   KC_BSLS,            KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,
-    _______,  KC_ESC,   KC_RGUI,  KC_RALT,  KC_CAPS,   KC_QUOT,            KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,
-                                            _______,   _______,  KC_BSPC,  _______,  _______
+  _______, _______,     KC_2,      KC_3,     KC_4,      KC_5,                       KC_6,     TD_F7,   TD_F8,  TD_F9,  TD_F10,_______,
+  _______, _______,  _______,   _______,  _______,    KC_F11,                       KC_PLUS,  TD_F4,   TD_F5,  TD_F6,  KC_MINS,_______,
+  _______, _______,  _______,   _______,  _______,    KC_F12,                       KC_ASTR,  TD_F1,   TD_F2,  TD_F3,  KC_SLSH,_______,
+                                 _______,   _______,  KC_EQL,    _______,  TD_0_DOT
+
   ),
 
   [_ADJUST] = LAYOUT(
-    RGB_VAI,   RGB_SAI, RGB_HUI,  RGB_MOD,  XXXXXXX,   RGB_TOG,            XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-    RGB_VAD,   RGB_SAD, RGB_HUD,  RGB_RMOD, XXXXXXX,   XXXXXXX,            XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-    XXXXXXX,   XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,            QK_BOOT,    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
-                                            _______,   _______,  XXXXXXX,  _______,  _______
+    _______, RGB_VAI,   RGB_SAI, RGB_HUI,  RGB_MOD,    RGB_TOG,            DT_PRNT,   DT_DOWN,  DT_UP,  XXXXXXX,     XXXXXXX,_______,
+    _______, RGB_VAD,   RGB_SAD, RGB_HUD,  RGB_RMOD,   XXXXXXX,            BALL_HUI, BALL_WHT, BALL_DEC, XXXXXXX,     G(S(KC_4)),_______,
+    _______, AC_TOGG,   KC_BTN3, KC_BTN2,  KC_BTN1,    BALL_SCR,           QK_RBT,   QK_BOOT,   EE_CLR,  XXXXXXX,     XXXXXXX,_______,
+                              KC_LALT,      _______,  _______,   RAISE,   KC_RGUI
   ),
 };
 

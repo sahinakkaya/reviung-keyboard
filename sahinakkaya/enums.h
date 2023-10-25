@@ -8,6 +8,8 @@ enum layer_names {
     _LOWER,
     _RAISE,
     _ADJUST,
+    _WINDOW_MANAGER,
+    _MOUSE,
     _NUMPAD
 };
 
@@ -20,7 +22,8 @@ enum custom_keycodes {
   BALL_NCL,              //left click
   BALL_RCL,              //right click
   BALL_MCL,              //middle click
-  REP
+  REP,
+  KC_ACCEL
 };
 
 #define LOWER  MO(_LOWER)
@@ -48,5 +51,52 @@ enum custom_keycodes {
 #define RALT_ENT RALT_T(KC_ENT)
 #define RALT_REP LT(0, REP)
 #define LGUI_TAB LGUI_T(KC_TAB)
+
+enum tap_dance {
+  _TD_F1,
+  _TD_F2,
+  _TD_F3,
+  _TD_F4,
+  _TD_F5,
+  _TD_F6,
+  _TD_F7,
+  _TD_F8,
+  _TD_F9,
+  _TD_F10,
+  _TD_F11,
+  _TD_F12,
+  _TD_0_DOT,
+  _TD_A_ESC,
+  _TD_QUOT_DQUOT,
+  _TD_Q_ESC
+};
+
+
+#define TD_F1 TD(_TD_F1)
+#define TD_F2 TD(_TD_F2)
+#define TD_F3 TD(_TD_F3)
+#define TD_F4 TD(_TD_F4)
+#define TD_F5 TD(_TD_F5)
+#define TD_F6 TD(_TD_F6)
+#define TD_F7 TD(_TD_F7)
+#define TD_F8 TD(_TD_F8)
+#define TD_F9 TD(_TD_F9)
+#define TD_F10 TD(_TD_F10)
+#define TD_F11 TD(_TD_F11)
+#define TD_F12 TD(_TD_F12)
+#define TD_0_DOT TD(_TD_0_DOT)
+#define TD_A_ESC TD(_TD_A_ESC)
+#define TD_Q_ESC TD(_TD_Q_ESC)
+#define TD_QUOT_DQT TD(_TD_QUOT_DQUOT)
+
+
+#define NAV_LEFT LT(0, KC_LEFT)     // tap: left  | long-tap: beginning of line
+#define NAV_UP LT(0, KC_UP)         // tap: up    | long-tap: beginning of document
+#define NAV_DOWN LT(0, KC_DOWN)     // tap: down  | long-tap: end of document
+#define NAV_RIGHT LT(0, KC_RIGHT)   // tap: right | long-tap: end of line
+
+#define MOD_MASK_LSHIFT MOD_BIT(KC_LSFT)
+#define MOD_MASK_RSHIFT MOD_BIT(KC_RSFT)
+#define DRG_SCRLL LT(0, KC_BTN1)   // tap: mouse click | long-tap: mouse scroll
 
 #endif
