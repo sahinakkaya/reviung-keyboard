@@ -113,9 +113,6 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
 }
 
 uint8_t mod_state;
-extern uint16_t mouse_debounce_timer;
-// extern uint8_t white, reg, green, blue;
-// static mouse_debounce_timer = 0;
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   mod_state = get_mods();
   switch (keycode){
@@ -211,7 +208,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
             return false;
         }
         default:
-            mouse_debounce_timer  = timer_read();
             break;
     }
   return true;
