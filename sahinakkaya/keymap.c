@@ -85,3 +85,221 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SHFT_Z:
+            return TAPPING_TERM - 40;
+        case SHFT_SLSH:
+            return TAPPING_TERM - 60;
+        // case LT(1, KC_GRV):
+        //     return 130;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
+                            uint8_t* remembered_mods) {
+    switch (keycode) {
+        case KC_A ... KC_Z:
+            *remembered_mods &= ~MOD_MASK_SHIFT;
+            break;
+        case RALT_REP:
+            return false;
+    }
+
+    return true;  // Other keys can be repeated.
+}
+
+uint8_t mod_state;
+extern uint16_t mouse_debounce_timer;
+extern bool set_scrolling;
+// extern uint8_t white, reg, green, blue;
+// static mouse_debounce_timer = 0;
+bool process_record_user(uint16_t keycode, keyrecord_t *record){
+  mod_state = get_mods();
+  switch (keycode){
+    case  BALL_HUI:
+      if(record->event.pressed){
+        ball_increase_hue();
+      }
+      break;
+
+    case BALL_WHT:
+      if(record-> event.pressed){
+        cycle_white();
+      }
+      break;
+
+    case BALL_DEC:
+    if(record-> event.pressed){
+        decrease_color();
+      }
+      break;
+
+    case BALL_SCR:
+    if(record->event.pressed){
+    } else{
+      set_scrolling = false;
+    }
+    break;
+
+    case BALL_NCL:
+      record->event.pressed?register_code(KC_BTN1):unregister_code(KC_BTN1);
+      break;
+    case BALL_RCL:
+        record->event.pressed?register_code(KC_BTN2):unregister_code(KC_BTN2);
+        break;
+    case BALL_MCL:
+        record->event.pressed?register_code(KC_BTN3):unregister_code(KC_BTN3);
+        break;
+    case DRG_SCRLL:
+        {
+
+            static bool scrolling;
+
+            if (!record->tap.count && record->event.pressed) {
+                set_scrolling = true;
+                scrolling = true;
+                return false;
+            } else {
+                if (scrolling) {
+                    scrolling = false;
+                    set_scrolling = false;
+                    return false;
+                }
+            }
+            break;
+        }
+    case KC_ACCEL:
+            if (record->event.pressed) {
+                pointing_device_set_cpi(32000);
+            } else {
+                pointing_device_set_cpi(16000);
+            }
+            return false;
+    case RSE_BSPC:
+        {
+        // Initialize a boolean variable that keeps track
+        // of the delete key status: registered or not?
+        static bool delkey_registered;
+        if (record->tap.count && record->event.pressed) {
+            // Detect the activation of either shift keys
+            if (mod_state & MOD_MASK_LSHIFT) {
+                // First temporarily canceling both shifts so that
+                // shift isn't applied to the KC_DEL keycode
+                del_mods(MOD_MASK_LSHIFT);
+                register_code(KC_DEL);
+                // Update the boolean variable to reflect the status of KC_DEL
+                delkey_registered = true;
+                // Reapplying modifier state so that the held shift key(s)
+                // still work even after having tapped the Backspace/Delete key.
+                set_mods(mod_state);
+                return false;
+            } else if (mod_state & MOD_MASK_RSHIFT){
+                register_code(KC_DEL);
+                // Update the boolean variable to reflect the status of KC_DEL
+                delkey_registered = true;
+                return false;
+
+            }
+        } else { // on release of KC_BSPC
+            // In case KC_DEL is still being sent even after the release of KC_BSPC
+            if (delkey_registered) {
+                unregister_code(KC_DEL);
+                delkey_registered = false;
+                return false;
+            }
+        }
+        // Let QMK process the KC_BSPC keycode as usual outside of shift
+        return true;
+    }
+    case LOW_SPC:
+        {
+        static bool shift_oneshot;
+        if (record->tap.count && record->event.pressed) {
+            if (mod_state & MOD_MASK_RSHIFT) { // check if shift is held
+                del_mods(MOD_MASK_SHIFT);  // unregister shift
+                register_code(KC_DOT);     // register a dot
+                register_code(KC_SPC);     // register a space
+                shift_oneshot = true;
+                return false;
+            }
+        } else { // when space is released
+            if (shift_oneshot) {
+                unregister_code(KC_SPC);
+                shift_oneshot = false;
+                set_oneshot_mods(MOD_BIT(KC_LSFT)); // enable one shot shift
+                return false;
+            }
+        }
+        // Let QMK process the KC_SPC keycode as usual outside of shift
+        return true;
+    }
+    case RALT_REP:
+        {
+            static bool ralt_held = false;
+            if (record->event.pressed) {
+                if (record->tap.count) {
+                    add_mods(get_last_mods());
+                    tap_code16(get_last_keycode());
+                } else {
+                    register_mods(MOD_BIT(KC_RALT));
+                    ralt_held = true;
+                    uprintf("now mods are %2u\n", mod_state);
+                }
+            } else {
+                if (ralt_held) {
+                    uprintf("i am here, mods are %2u\n", mod_state);
+                    unregister_mods(MOD_BIT(KC_RALT));
+                    uprintf("now mods are %2u\n", mod_state);
+                } else {
+
+                    del_mods(get_last_mods());
+                }
+            }
+            return false;
+        }
+        default:
+            mouse_debounce_timer  = timer_read();
+            break;
+    }
+  return true;
+}
+
+
+// Light LEDs 6 to 9 and 12 to 15 red when caps lock is active. Hard to ignore!
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 5, HSV_RED},       // Light 4 LEDs, starting with LED 6
+    {5, 5, HSV_BLUE}       // Light 4 LEDs, starting with LED 12
+);
+
+// Light LEDs 9 & 10 in cyan when keyboard layer 1 is active
+const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 2, HSV_CYAN}
+);
+
+
+// Light LEDs 11 & 12 in purple when keyboard layer 2 is active
+const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 2, HSV_PURPLE}
+);
+// Light LEDs 13 & 14 in green when keyboard layer 3 is active
+const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 2, HSV_GREEN}
+);
+
+// Now define the array of layers. Later layers take precedence
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_capslock_layer,
+    my_layer1_layer,    // Overrides caps lock layer
+    my_layer2_layer,    // Overrides other layers
+    my_layer3_layer     // Overrides other layers
+);
+
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
