@@ -88,9 +88,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case SHFT_Z:
+        case SHFT_CAPS:
             return TAPPING_TERM - 40;
-        case SHFT_SLSH:
+        case SHFT_BSLS:
             return TAPPING_TERM - 60;
         // case LT(1, KC_GRV):
         //     return 130;
