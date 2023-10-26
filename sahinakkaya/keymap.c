@@ -114,37 +114,11 @@ bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
 
 uint8_t mod_state;
 extern uint16_t mouse_debounce_timer;
-extern bool set_scrolling;
 // extern uint8_t white, reg, green, blue;
 // static mouse_debounce_timer = 0;
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   mod_state = get_mods();
   switch (keycode){
-    case  BALL_HUI:
-      if(record->event.pressed){
-        ball_increase_hue();
-      }
-      break;
-
-    case BALL_WHT:
-      if(record-> event.pressed){
-        cycle_white();
-      }
-      break;
-
-    case BALL_DEC:
-    if(record-> event.pressed){
-        decrease_color();
-      }
-      break;
-
-    case BALL_SCR:
-    if(record->event.pressed){
-    } else{
-      set_scrolling = false;
-    }
-    break;
-
     case BALL_NCL:
       record->event.pressed?register_code(KC_BTN1):unregister_code(KC_BTN1);
       break;
@@ -154,31 +128,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     case BALL_MCL:
         record->event.pressed?register_code(KC_BTN3):unregister_code(KC_BTN3);
         break;
-    case DRG_SCRLL:
-        {
-
-            static bool scrolling;
-
-            if (!record->tap.count && record->event.pressed) {
-                set_scrolling = true;
-                scrolling = true;
-                return false;
-            } else {
-                if (scrolling) {
-                    scrolling = false;
-                    set_scrolling = false;
-                    return false;
-                }
-            }
-            break;
-        }
-    case KC_ACCEL:
-            if (record->event.pressed) {
-                pointing_device_set_cpi(32000);
-            } else {
-                pointing_device_set_cpi(16000);
-            }
-            return false;
     case RSE_BSPC:
         {
         // Initialize a boolean variable that keeps track
